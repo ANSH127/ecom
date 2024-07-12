@@ -38,10 +38,10 @@ function Header() {
   };
 
   return (
-    <div className="w-11/12 mx-auto ">
+    <div className="sm:w-4/5 w-full mx-auto ">
       <AppBar
         position="static"
-        sx={{ backgroundColor: "#1e293b", color: "#ffffff", borderRadius: "10px" }}
+        sx={{ backgroundColor: "white", color: "black", borderRadius: "10px" }}
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -60,7 +60,7 @@ function Header() {
                 textDecoration: "none",
               }}
             >
-                <Link to="/" className="text-white">Ecommerce</Link>
+                <Link to="/" className="text-black">Ecommerce</Link>
              
             </Typography>
 
@@ -116,7 +116,7 @@ function Header() {
                 textDecoration: "none",
               }}
             >
-                <Link to="/" className="text-white">Ecommerce</Link>
+                <Link to="/" className="text-black">Ecommerce</Link>
 
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -124,7 +124,7 @@ function Header() {
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "#ffffff", display: "block" }}
+                  sx={{ my: 2, color: "black", display: "block" }}
                 >
                   {page}
                 </Button>
@@ -133,7 +133,7 @@ function Header() {
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open wishlist" >
-                <Link to="/wishlist" className="text-white">
+                <Link to="/wishlist" className="text-black">
                 <FavoriteBorderOutlinedIcon
                   sx={{ fontSize: "2rem", marginX: "1px" }}
                 />
@@ -141,7 +141,7 @@ function Header() {
               </Tooltip>
               <Tooltip title="Open cart" >
 
-                <Link to="/cart" className="text-white">
+                <Link to="/cart" className="text-black">
                 <ShoppingCartOutlinedIcon
                   sx={{
                     fontSize: "2rem",
