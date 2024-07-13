@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Card() {
   return (
     <Link to="/product/1">
-      <div className="shadow-sm rounded-lg  sm:w-60 w-52 p-4 text-black ">
+      <div className="shadow-sm rounded-lg  sm:w-60  w-48 p-2  text-black  ">
         <img
           src="https://www.snitch.co.in/cdn/shop/files/05f3c942241254f0a1413ab383921106.webp?v=1718186797&width=1800"
           alt="product"
@@ -19,9 +19,9 @@ export default function Card() {
             <StarIcon className="text-yellow-500" />
             <StarIcon className="text-yellow-500" />
             <StarBorderOutlinedIcon className="text-yellow-500" />
-            <p className="text-sm pt-0.5"> 
+            {/* <p className="text-sm pt-0.5"> 
                 26 reviews
-            </p>
+            </p> */}
 
           </div>
           <p className=" text-sm mt-2">INR 999</p>
