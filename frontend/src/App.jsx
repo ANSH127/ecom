@@ -13,6 +13,8 @@ import {
 import HomePage from './pages/HomePage';
 import Header from "./components/Header";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage";
 function App() {
   return (
     <Router>
@@ -20,6 +22,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} />
+
       </Routes>
     </Router>
   );
