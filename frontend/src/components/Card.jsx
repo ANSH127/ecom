@@ -1,17 +1,19 @@
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import { Link } from "react-router-dom";
-export default function Card() {
+export default function Card({ product }) {
   return (
-    <Link to="/product/1">
+    <Link to={`/product/${product.id}`} >
       <div className="shadow-sm rounded-lg  sm:w-60  w-48 p-2  text-black  ">
         <img
-          src="https://www.snitch.co.in/cdn/shop/files/05f3c942241254f0a1413ab383921106.webp?v=1718186797&width=1800"
+          src={product.image}
           alt="product"
           className="w-full h-50 object-cover"
         />
         <div className="mt-4">
-          <h2 className=" text-base">Mens Cotton Jacket</h2>
+          <h2 className=" text-base">
+            {product.name}
+          </h2>
 
           <div className="flex mt-2">
             <StarIcon className="text-yellow-500" />
@@ -24,7 +26,7 @@ export default function Card() {
             </p> */}
 
           </div>
-          <p className=" text-sm mt-2">INR 999</p>
+          <p className=" text-sm mt-2">INR {product.price}</p>
         </div>
         {/* <div className='mt-4'>
             <button className='w-full py-2 rounded-lg bg-yellow-500 text-white'>

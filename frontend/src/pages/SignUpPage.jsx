@@ -16,12 +16,39 @@ export default function SignUpPage() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [role, setRole] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    
+    if (name === "" || email === "" || password === "") {
+      alert("Please fill all the fields");
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:8080/api/user/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data);
+        navigate("/login");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="sm:w-4/5 w-full mx-auto h-full shadow-lg py-4">
@@ -74,14 +101,14 @@ export default function SignUpPage() {
             </Link>
           </p>
 
-          {(
+          {
             <button
               className="p-2 bg-black text-white rounded-lg"
               onClick={handleSubmit}
             >
               Sign Up
             </button>
-          )}
+          }
 
           {/* <h3 className="text-center">Or</h3>
           <div className="flex justify-center gap-4">

@@ -15,7 +15,34 @@ export default function LoginPage() {
   const [loading, setLoading] = React.useState(false);
 
   const handleLogin = async () => {
-    
+    if (email === "" || password === "") {
+      alert("Please fill all the fields");
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:8080/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data);
+        navigate("/");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="sm:w-4/5 w-full mx-auto  h-full shadow-lg py-4 ">
@@ -62,14 +89,14 @@ export default function LoginPage() {
             </Link>
           </p>
 
-          {(
+          {
             <button
               className="p-2 bg-black text-white rounded-lg"
               onClick={handleLogin}
             >
               Sign In
             </button>
-          )}
+          }
         </div>
       </div>
       {/* <ToastContainer
