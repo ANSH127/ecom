@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-// import Loadar from "../components/Loadar";
+import Loadar from "../components/Loadar";
 import { useNavigate } from "react-router-dom";
 
 import SignUpImage from "../assets/images/signup.png";
@@ -10,8 +10,8 @@ import SignUpImage from "../assets/images/signup.png";
 
 // import axios from "axios";
 
-// import { ToastContainer, Zoom, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, Zoom, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function SignUpPage() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -21,7 +21,7 @@ export default function SignUpPage() {
 
   const handleSubmit = async () => {
     if (name === "" || email === "" || password === "") {
-      alert("Please fill all the fields");
+      toast.warning("Please fill all the fields");
       return;
     }
     setLoading(true);
@@ -39,13 +39,14 @@ export default function SignUpPage() {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log(data);
+        // console.log(data);
         navigate("/login");
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -102,6 +103,7 @@ export default function SignUpPage() {
           </p>
 
           {
+            loading ? <Loadar /> :
             <button
               className="p-2 bg-black text-white rounded-lg"
               onClick={handleSubmit}
@@ -120,7 +122,7 @@ export default function SignUpPage() {
           </div> */}
         </div>
       </div>
-      {/* <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={2000}
         hideProgressBar
@@ -133,7 +135,7 @@ export default function SignUpPage() {
         theme="dark"
         transition={Zoom}
         limit={1}
-      /> */}
+      />
     </div>
   );
 }

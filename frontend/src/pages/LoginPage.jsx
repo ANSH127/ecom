@@ -1,11 +1,11 @@
 import React from "react";
 import LoginImage from "../assets/images/signin.png";
 // import GoogleIcon from "../assets/images/googleIcon.png";
-// import Loadar from "../components/Loadar";
+import Loadar from "../components/Loadar";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
-// import { ToastContainer, Zoom, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, Zoom, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
@@ -16,7 +16,7 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     if (email === "" || password === "") {
-      alert("Please fill all the fields");
+      toast.warning("Please fill all the fields");
       return;
     }
     setLoading(true);
@@ -33,13 +33,18 @@ export default function LoginPage() {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log(data);
+        // console.log(data);
+        localStorage.setItem("user", JSON.stringify(data));
+        
         navigate("/");
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
+
       console.log(error);
+      toast.error("Something went wrong");
+
     } finally {
       setLoading(false);
     }
@@ -90,6 +95,7 @@ export default function LoginPage() {
           </p>
 
           {
+            loading ? <Loadar /> :
             <button
               className="p-2 bg-black text-white rounded-lg"
               onClick={handleLogin}
@@ -99,7 +105,7 @@ export default function LoginPage() {
           }
         </div>
       </div>
-      {/* <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={2000}
         hideProgressBar
@@ -112,7 +118,7 @@ export default function LoginPage() {
         theme="dark"
         transition={Zoom}
         limit={1}
-      /> */}
+      />
     </div>
   );
 }

@@ -15,6 +15,7 @@ import Header from "./components/Header";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
+import WishlistPage from "./pages/WishlistPage";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetailPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
 
       </Routes>
     </Router>
