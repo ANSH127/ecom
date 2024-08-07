@@ -7,7 +7,7 @@ import Loadar from "../components/Loadar";
 
 import { ToastContainer, Zoom, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 export default function ProductDetailPage() {
   const { id } = useParams();
   //   console.log(id);
@@ -16,6 +16,8 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(false);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
+
+  const navigate = useNavigate();
 
   const fetchProductDetails = async () => {
     try {
@@ -190,7 +192,7 @@ export default function ProductDetailPage() {
             <p className="text-sm  font-mono ">{productDetails.description}</p>
             <button
               className="bg-black w-full text-white px-4  mt-2  rounded py-2"
-              onClick={isInCart ? null : handleAddToCart}
+              onClick={isInCart ? () => navigate("/cart") : handleAddToCart}
             >
               {isInCart ? "Go to Cart" : "Add to Cart"}
             </button>
