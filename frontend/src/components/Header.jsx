@@ -13,15 +13,41 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { useNavigate } from "react-router-dom";
+
+
+import AvatarFace from "../assets/images/Avatar1.jpg";
+import SadFace from "../assets/images/sad-face.png";
+
 const pages = [];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  {
+    name: "Profile",
+    path: "/profile",
+    showOnAuth: true,
+  },
+  {
+    name: "Login",
+    path: "/login",
+    showOnAuth: false,
+  },
+  {
+    name: "Sign Up",
+    path: "/signup",
+    showOnAuth: false,
+  },
+  {
+    name: "Logout",
+    showOnAuth: true,
+  },
+];
 
 import { Link } from "react-router-dom";
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -36,6 +62,11 @@ function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const isAuthenticated = localStorage.getItem("user") ? true : false;
+
+
+
 
   return (
     <div className="sm:w-4/5 w-full mx-auto ">
@@ -60,8 +91,9 @@ function Header() {
                 textDecoration: "none",
               }}
             >
-                <Link to="/" className="text-black">Ecommerce</Link>
-             
+              <Link to="/" className="text-black">
+                Ecommerce
+              </Link>
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -116,8 +148,9 @@ function Header() {
                 textDecoration: "none",
               }}
             >
-                <Link to="/" className="text-black">Ecommerce</Link>
-
+              <Link to="/" className="text-black">
+                Ecommerce
+              </Link>
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
@@ -132,27 +165,27 @@ function Header() {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open wishlist" >
+              <Tooltip title="Open wishlist">
                 <Link to="/wishlist" className="text-black">
-                <FavoriteBorderOutlinedIcon
-                  sx={{ fontSize: "2rem", marginX: "1px" }}
-                />
+                  <FavoriteBorderOutlinedIcon
+                    sx={{ fontSize: "2rem", marginX: "1px" }}
+                  />
                 </Link>
               </Tooltip>
-              <Tooltip title="Open cart" >
-
+              <Tooltip title="Open cart">
                 <Link to="/cart" className="text-black">
-                <ShoppingCartOutlinedIcon
-                  sx={{
-                    fontSize: "2rem",
-                    marginX: "10px",
-                  }}
-                />
+                  <ShoppingCartOutlinedIcon
+                    sx={{
+                      fontSize: "2rem",
+                      marginX: "10px",
+                    }}
+                  />
                 </Link>
               </Tooltip>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src={isAuthenticated ? AvatarFace : SadFace}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -171,11 +204,28 @@ function Header() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                {settings.map(
+                  (setting) =>
+                    isAuthenticated === setting.showOnAuth && (
+                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                        {setting.name === "Logout" ? (
+                          <Typography
+                            onClick={() => {
+                              localStorage.removeItem("user");
+                              navigate("/login");
+                            }}
+                            className="text-black"
+                          >
+                            {setting.name}
+                          </Typography>
+                        ) : (
+                          <Link to={setting?.path} className="text-black">
+                            {setting.name}
+                          </Link>
+                        )}
+                      </MenuItem>
+                    )
+                )}
               </Menu>
             </Box>
           </Toolbar>

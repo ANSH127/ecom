@@ -3,13 +3,16 @@ import axios from "axios";
 import Card from "../components/Card";
 import Loadar from "../components/Loadar";
 
+import { ToastContainer, Zoom, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function WishlistPage() {
   const [wishlist, setWishlist] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   const fetchWishlist = async () => {
     if (localStorage.getItem("user") === null) {
-      alert("Please login to view wishlist");
+      toast.error("Please login to view wishlist");
       return;
     }
     try {
@@ -43,14 +46,26 @@ export default function WishlistPage() {
         </div>
       )}
 
-      {
-        wishlist.length === 0 && !loading && (
-          <div className="text-center font-bold text-black text-2xl py-4">
-            No products in wishlist
-          </div>
-        )
-      }
+      {wishlist.length === 0 && !loading && (
+        <div className="text-center font-bold text-black text-2xl py-4">
+          No products in wishlist
+        </div>
+      )}
 
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Zoom}
+        limit={1}
+      />
     </div>
   );
 }

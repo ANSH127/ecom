@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import Loadar from "../components/Loadar";
 
+import { ToastContainer, Zoom, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
   const fetchCartItems = async () => {
     if (localStorage.getItem("user") === null) {
-      alert("Please login to view cart");
+      toast.error("Please login to view cart");
       return;
     }
     try {
@@ -89,6 +91,21 @@ export default function CartPage() {
           </div>
         </div>
       )}
+      
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Zoom}
+        limit={1}
+      />
     </div>
   );
 }

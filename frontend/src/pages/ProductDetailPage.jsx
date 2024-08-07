@@ -37,7 +37,7 @@ export default function ProductDetailPage() {
 
   const handleAddToWishlist = async () => {
     if (localStorage.getItem("user") === null) {
-      alert("Please login to add to wishlist");
+      toast.error("Please login to add to wishlist");
       return;
     }
 
@@ -86,7 +86,7 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = async () => {
     if (localStorage.getItem("user") === null) {
-      alert("Please login to add to cart");
+      toast.error("Please login to add to cart");
       return;
     }
 
