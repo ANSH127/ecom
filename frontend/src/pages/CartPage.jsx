@@ -5,10 +5,14 @@ import Loadar from "../components/Loadar";
 
 import { ToastContainer, Zoom, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
+  const navigate = useNavigate();
+
   const fetchCartItems = async () => {
     if (localStorage.getItem("user") === null) {
       toast.error("Please login to view cart");
@@ -22,10 +26,34 @@ export default function CartPage() {
       );
       let total = 0;
       response.data.map((item) => {
-        total += item.product.price*item.count;
+        total += item.product.price * item.count;
       });
       setSubtotal(total);
       setCartItems(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCheckout = async () => {
+    if (localStorage.getItem("user") === null) {
+      toast.error("Please login to checkout");
+      return;
+    }
+    try {
+      setLoading(true);
+      const user = JSON.parse(localStorage.getItem("user"));
+      const response = await axios.post(
+        `http://localhost:8080/api/order/createorder/${user.id}`
+      );
+      if (response.data == true) {
+        alert("Order Placed Successfully");
+        navigate("/");
+      } else {
+        toast.error("Error in placing order");
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -59,12 +87,11 @@ export default function CartPage() {
                 />
               ))}
 
-                {cartItems.length === 0 && (
-                    <div className="text-center font-bold text-black text-2xl py-4">
-                        No products in cart
-                    </div>
-                )}
-
+              {cartItems.length === 0 && (
+                <div className="text-center font-bold text-black text-2xl py-4">
+                  No products in cart
+                </div>
+              )}
             </div>
           </div>
 
@@ -84,14 +111,17 @@ export default function CartPage() {
             </div>
 
             {subtotal > 0 && (
-              <button className="bg-black text-white w-full py-2 rounded-lg mt-4">
+              <button
+                className="bg-black text-white w-full py-2 rounded-lg mt-4"
+                onClick={handleCheckout}
+              >
                 Proceed to Checkout
               </button>
             )}
           </div>
         </div>
       )}
-      
+
       <ToastContainer
         position="top-center"
         autoClose={2000}
