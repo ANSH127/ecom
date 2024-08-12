@@ -27,6 +27,11 @@ const settings = [
     showOnAuth: true,
   },
   {
+    name:"My Orders",
+    path:"/orders",
+    showOnAuth:true,
+  },
+  {
     name: "Login",
     path: "/login",
     showOnAuth: false,
