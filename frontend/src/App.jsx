@@ -18,6 +18,8 @@ import LoginPage from "./pages/LoginPage";
 import WishlistPage from "./pages/WishlistPage";
 import CartPage from "./pages/CartPage";
 import MyorderPage from "./pages/MyorderPage";
+import AddressPage from "./pages/AddressPage";
+
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/orders" element={<MyorderPage />} />
+        <Route path="/address" element={<AddressPage />} />
 
       </Routes>
     </Router>
