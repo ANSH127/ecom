@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rest.springboot.entities.Cart;
 import com.rest.springboot.entities.Order;
+import com.rest.springboot.service.AddressService;
 import com.rest.springboot.service.CartService;
 import com.rest.springboot.service.OrderService;
 
@@ -27,12 +28,15 @@ public class OrderController {
 
 	@Autowired
 	private CartService cartService;
+	
+	@Autowired
+	private AddressService addressService;
 
 	// create order
 	// create a post mapping that post the order detail in the database
 	// return the order detail
-	@PostMapping("/createorder/{userId}")
-	public boolean saveOrder(@PathVariable("userId") Integer userId) {
+	@PostMapping("/createorder/{userId}/{addressId}")
+	public boolean saveOrder(@PathVariable("userId") Integer userId, @PathVariable("addressId") Integer addressId) {
 
 		List<Cart> carts = cartService.fetchCartByUserId(userId);
 		Double totalAmount = 0.0;
@@ -44,6 +48,11 @@ public class OrderController {
 		for (Cart c : carts) {
 			totalAmount += c.getProduct().getPrice() * c.getCount();
 		}
+		
+		
+		// genrate a random number for group id to track the order 12 digit
+		int random = (int) (Math.random() * 1000000000);
+		
 
 		for (Cart c : carts) {
 			Order order = new Order();
@@ -53,6 +62,8 @@ public class OrderController {
 			order.setTotalPrice(totalAmount);
 			order.setStatus("Order Placed");
 			order.setOrderDate(LocalDateTime.now());
+			order.setGroupId(random);
+			order.setAddress(addressService.fetchAddressById(addressId));
 			orderService.saveOrder(order);
 
 		}

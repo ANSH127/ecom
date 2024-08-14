@@ -50,6 +50,16 @@ public class Order {
 
 	@Column(name = "status", nullable = false)
 	private String status;
+	
+	@ManyToOne
+	@JoinColumn(name="address_id", nullable = false)
+	private Address address;
+	
+	
+	@Column(name="group_id")
+	private Integer groupId;
+	
+	
 
 	public void setOrderDate(LocalDateTime orderDate) {
 		this.orderDate = orderDate;
